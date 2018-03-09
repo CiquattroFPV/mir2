@@ -977,7 +977,7 @@ namespace Client.MirScenes
             }
 
             if (BuffsDialog.Visible)
-                BuffsDialog.UpdateBuffs();
+                //BuffsDialog.UpdateBuffs();
 
             MapControl.Process();
             MainDialog.Process();
@@ -3798,7 +3798,7 @@ namespace Client.MirScenes
                             ef.Played += (o, e) => SoundManager.PlaySound(20000 + (ushort)Spell.HellFire * 10 + 1);
                             ob.Effects.Add(ef);
                         }
-                        break;
+                        break;                    
                     case SpellEffect.Behemoth:
                         {
                             MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Behemoth], 788, 10, 1500, ob.CurrentLocation));
@@ -3814,6 +3814,13 @@ namespace Client.MirScenes
                         break;
                     case SpellEffect.IcePillar:
                         ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.IcePillar], 18, 8, 800, ob));
+                        break;
+                    case SpellEffect.SnowWolfKing:
+                        {
+                            Effect ef = new Effect(Libraries.Monsters[(ushort)Monster.SnowWolfKing], 561, 12, 1200, ob);
+                            ef.Played += (o, e) => SoundManager.PlaySound(20000 + (ushort)Spell.IceStorm * 10 + 1);
+                            ob.Effects.Add(ef);
+                        }
                         break;
                 }
                 return;
@@ -9419,8 +9426,25 @@ namespace Client.MirScenes
                         }
                         if (!fail)
                         {
-                            User.QueuedAction = new QueuedAction { Action = MirAction.Running, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, distance) };
-                            return;
+                            if ((CanWalk(direction)))
+                            {
+                                User.QueuedAction = new QueuedAction { Action = MirAction.Running, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, distance) };
+                                return;
+                            }
+                            #region Alternative Running Directions
+                            else if ((CanWalk(Functions.NextDir(direction))))
+                            {
+                                direction = Functions.NextDir(direction);
+                                User.QueuedAction = new QueuedAction { Action = MirAction.Running, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, distance) };
+                                return;
+                            }
+                            if ((CanWalk(Functions.PreviousDir(direction))))
+                            {
+                                direction = Functions.PreviousDir(direction);
+                                User.QueuedAction = new QueuedAction { Action = MirAction.Running, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, distance) };
+                                return;
+                            }
+                            #endregion
                         }
                     }
                     if ((CanWalk(direction)) && (CheckDoorOpen(Functions.PointMove(User.CurrentLocation, direction, 1))))
@@ -9428,6 +9452,20 @@ namespace Client.MirScenes
                         User.QueuedAction = new QueuedAction { Action = MirAction.Walking, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, 1) };
                         return;
                     }
+                    #region Alternative Walking Directions
+                    else if ((CanWalk(Functions.NextDir(direction)) && (CheckDoorOpen(Functions.PointMove(User.CurrentLocation, Functions.NextDir(direction), 1)))))
+                    {
+                        direction = Functions.NextDir(direction);
+                        User.QueuedAction = new QueuedAction { Action = MirAction.Walking, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, 1) };
+                        return;
+                    }
+                    else if ((CanWalk(Functions.PreviousDir(direction)) && (CheckDoorOpen(Functions.PointMove(User.CurrentLocation, Functions.PreviousDir(direction), 1)))))
+                    {
+                        direction = Functions.PreviousDir(direction);
+                        User.QueuedAction = new QueuedAction { Action = MirAction.Walking, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, 1) };
+                        return;
+                    }
+                    #endregion
                     if (direction != User.Direction)
                     {
                         User.QueuedAction = new QueuedAction { Action = MirAction.Standing, Direction = direction, Location = User.CurrentLocation };
@@ -9535,6 +9573,20 @@ namespace Client.MirScenes
                             User.QueuedAction = new QueuedAction { Action = MirAction.Walking, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, 1) };
                             return;
                         }
+                        #region Alternative Walking Directions
+                        else if ((CanWalk(Functions.NextDir(direction)) && (CheckDoorOpen(Functions.PointMove(User.CurrentLocation, Functions.NextDir(direction), 1)))))
+                        {
+                            direction = Functions.NextDir(direction);
+                            User.QueuedAction = new QueuedAction { Action = MirAction.Walking, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, 1) };
+                            return;
+                        }                     
+                        else if ((CanWalk(Functions.PreviousDir(direction)) && (CheckDoorOpen(Functions.PointMove(User.CurrentLocation, Functions.PreviousDir(direction), 1)))))
+                        {
+                            direction = Functions.PreviousDir(direction);
+                            User.QueuedAction = new QueuedAction { Action = MirAction.Walking, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, 1) };
+                            return;
+                        }                       
+                        #endregion
                         if (direction != User.Direction)
                         {
                             User.QueuedAction = new QueuedAction { Action = MirAction.Standing, Direction = direction, Location = User.CurrentLocation };
@@ -9574,7 +9626,25 @@ namespace Client.MirScenes
                             }
                             if (!fail)
                             {
-                                User.QueuedAction = new QueuedAction { Action = MirAction.Running, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, User.RidingMount || (User.Sprint && !User.Sneaking) ? 3 : 2) };
+                                if ((CanWalk(direction)))
+                                {
+                                    User.QueuedAction = new QueuedAction { Action = MirAction.Running, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, distance) };
+                                    return;
+                                }
+                                #region Alternative Running Directions
+                                else if ((CanWalk(Functions.NextDir(direction))))
+                                {
+                                    direction = Functions.NextDir(direction);
+                                    User.QueuedAction = new QueuedAction { Action = MirAction.Running, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, distance) };
+                                    return;
+                                }
+                                if ((CanWalk(Functions.PreviousDir(direction))))
+                                {
+                                    direction = Functions.PreviousDir(direction);
+                                    User.QueuedAction = new QueuedAction { Action = MirAction.Running, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, distance) };
+                                    return;
+                                }
+                                #endregion
                                 return;
                             }
                         }
@@ -9583,6 +9653,20 @@ namespace Client.MirScenes
                             User.QueuedAction = new QueuedAction { Action = MirAction.Walking, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, 1) };
                             return;
                         }
+                        #region Alternative Walking Directions
+                        else if ((CanWalk(Functions.NextDir(direction)) && (CheckDoorOpen(Functions.PointMove(User.CurrentLocation, Functions.NextDir(direction), 1)))))
+                        {
+                            direction = Functions.NextDir(direction);
+                            User.QueuedAction = new QueuedAction { Action = MirAction.Walking, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, 1) };
+                            return;
+                        }
+                        else if ((CanWalk(Functions.PreviousDir(direction)) && (CheckDoorOpen(Functions.PointMove(User.CurrentLocation, Functions.PreviousDir(direction), 1)))))
+                        {
+                            direction = Functions.PreviousDir(direction);
+                            User.QueuedAction = new QueuedAction { Action = MirAction.Walking, Direction = direction, Location = Functions.PointMove(User.CurrentLocation, direction, 1) };
+                            return;
+                        }
+                        #endregion
                         if (direction != User.Direction)
                         {
                             User.QueuedAction = new QueuedAction { Action = MirAction.Standing, Direction = direction, Location = User.CurrentLocation };

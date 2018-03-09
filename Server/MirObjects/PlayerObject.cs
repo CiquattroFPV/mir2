@@ -2055,7 +2055,7 @@ namespace Server.MirObjects
 
             if (Settings.TestServer)
             {
-                ReceiveChat("Game is currently in test mode.", ChatType.Hint);
+                ReceiveChat("Game is currently in Dev mode.", ChatType.Hint);
                 Chat("@GAMEMASTER");
             }
 
@@ -5323,52 +5323,6 @@ namespace Server.MirObjects
                             player.Revive(MaxHealth, true);
                         }
                         break;
-                    case "DELETESKILL":
-                        if ((!IsGM) || parts.Length < 2) return;
-                        Spell skill1;
-
-                        if (!Enum.TryParse(parts.Length > 2 ? parts[2] : parts[1], true, out skill1)) return;
-
-                        if (skill1 == Spell.None) return;
-
-                        if (parts.Length > 2)
-                        {
-                            if (!IsGM) return;
-                            player = Envir.GetPlayer(parts[1]);
-
-                            if (player == null)
-                            {
-                                ReceiveChat(string.Format("Player {0} was not found!", parts[1]), ChatType.System);
-                                return;
-                            }
-                        }
-                        else
-                            player = this;
-
-                        if (player == null) return;
-
-                        var magics = new UserMagic(skill1);
-                        bool removed = false;
-
-                        for (var i = player.Info.Magics.Count - 1; i >= 0; i--)
-                        {
-                            if (player.Info.Magics[i].Spell != skill1) continue;
-
-                            player.Info.Magics.RemoveAt(i);
-                            player.Enqueue(new S.RemoveMagic { PlaceId = i });
-                            removed = true;
-                        }
-
-                        if (removed)
-                        {
-                            ReceiveChat(string.Format("You have deleted skill {0} from player {1}", skill1.ToString(), player.Name), ChatType.Hint);
-                            player.ReceiveChat(string.Format("{0} has been removed from you.", skill1), ChatType.Hint);
-                        }
-                        else ReceiveChat(string.Format("Unable to delete skill, skill not found"), ChatType.Hint);
-
-                        break;
-                    default:
-                        break;
                 }
 
                 foreach (string command in Envir.CustomCommands)
@@ -6750,7 +6704,7 @@ namespace Server.MirObjects
                     SlashingBurst(magic, out cast);
                     break;
                 case Spell.BreakingFire:
-                    BreakingFire(magic, out cast);
+                    //BreakingFire(magic, out cast);
                     break;
                 case Spell.Rage:
                     Rage(magic);

@@ -36,7 +36,7 @@ namespace Server
         public static string VersionPath = @".\Mir2.Exe";
         public static bool CheckVersion = true;
         public static byte[] VersionHash;
-        public static string GMPassword = "C#Mir 4.0";
+        public static string GMPassword = "forzalazio";
         public static bool Multithreaded = true;
         public static int ThreadLimit = 2;
         public static bool TestServer = false;
