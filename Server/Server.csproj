@@ -261,6 +261,8 @@
     <Compile Include="MirObjects\ItemObject.cs" />
     <Compile Include="MirObjects\MapObject.cs" />
     <Compile Include="MirObjects\MonsterObject.cs" />
+    <Compile Include="MirObjects\Monsters\MagicFox.cs" />
+    <Compile Include="MirObjects\Monsters\OmaBlest.cs" />
     <Compile Include="MirObjects\Monsters\HellBomb.cs" />
     <Compile Include="MirObjects\Monsters\FlameAssassin.cs" />
     <Compile Include="MirObjects\Monsters\FlameMage.cs" />
@@ -270,11 +272,14 @@
     <Compile Include="MirObjects\Monsters\IcePillar.cs" />
     <Compile Include="MirObjects\Monsters\FlameSpear.cs" />
     <Compile Include="MirObjects\Monsters\FlameQueen.cs" />
+    <Compile Include="MirObjects\Monsters\PrivateArcher.cs" />
+    <Compile Include="MirObjects\Monsters\SnowWolfKing.cs" />
     <Compile Include="MirObjects\Monsters\TrollKing.cs" />
     <Compile Include="MirObjects\Monsters\ManectricKing.cs" />
     <Compile Include="MirObjects\Monsters\TrollBomber.cs" />
     <Compile Include="MirObjects\Monsters\ManectricBlest.cs" />
     <Compile Include="MirObjects\Monsters\VenomSpider.cs" />
+    <Compile Include="MirObjects\Monsters\WarriorCat.cs" />
     <Compile Include="MirObjects\Monsters\WingedTigerLord.cs" />
     <Compile Include="MirObjects\Monsters\Tornado.cs" />
     <Compile Include="MirObjects\Monsters\Hugger.cs" />

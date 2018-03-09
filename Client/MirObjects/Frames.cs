@@ -1315,8 +1315,8 @@ namespace Client.MirObjects
             frame.Frames.Add(MirAction.Attack1, new Frame(112, 10, 0, 100));
             frame.Frames.Add(MirAction.Attack2, new Frame(192, 10, 0, 100));
             //frame.Frames.Add(MirAction.Attack3, new Frame(272, 10, 0, 100));
-            //frame.Frames.Add(MirAction.AttackRange1, new Frame(848, 8, 0, 100)); 
-            //frame.Frames.Add(MirAction.AttackRange2, new Frame(912, 9, 0, 100));
+            frame.Frames.Add(MirAction.AttackRange1, new Frame(432, 8, 0, 100)); 
+            frame.Frames.Add(MirAction.AttackRange2, new Frame(432, 9, 0, 100));
             frame.Frames.Add(MirAction.Struck, new Frame(272, 3, 0, 200));
             frame.Frames.Add(MirAction.Die, new Frame(296, 8, 0, 100));
             frame.Frames.Add(MirAction.Dead, new Frame(303, 1, 7, 1000));
@@ -1442,7 +1442,7 @@ namespace Client.MirObjects
             frame.Frames.Add(MirAction.Standing, new Frame(0, 10, 0, 500));
             frame.Frames.Add(MirAction.Walking, new Frame(80, 6, 0, 200));
             frame.Frames.Add(MirAction.Attack1, new Frame(128, 10, 0, 100));
-            frame.Frames.Add(MirAction.Attack2, new Frame(208, 10, 0, 100));
+            frame.Frames.Add(MirAction.Attack2, new Frame(208, 5, 0, 100));
             frame.Frames.Add(MirAction.Struck, new Frame(288, 3, 0, 200));
             frame.Frames.Add(MirAction.Die, new Frame(312, 10, 0, 100));
             frame.Frames.Add(MirAction.Dead, new Frame(321, 1, 9, 1000));

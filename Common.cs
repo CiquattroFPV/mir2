@@ -1197,7 +1197,8 @@ public enum SpellEffect : byte
     TurtleKing,
     Behemoth,
     Stunned,
-    IcePillar
+    IcePillar,
+    SnowWolfKing
 }
 
 public enum BuffType : byte
